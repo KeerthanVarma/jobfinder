@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="text-center p-5 bg-light rounded-4 shadow-sm my-4 bg-gradient">
+    <h1 class="display-2 fw-bold d-flex align-items-center justify-content-center text-primary">
+        Welcome to Job Finder 
+        <img src="{{ url_for('static', filename='logo.png') }}"
+             alt="Logo" width="90" height="90"
+             class="ms-3 rounded-circle shadow-sm border border-3 border-primary">
+    </h1>
+    <p class="lead text-muted">- Your personalized job search assistant</p>
+</div>
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-10">
+        <form action="{{ url_for('loading') }}" method="POST" class="card p-4 shadow-lg rounded-4 bg-white border-0">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
+                        <input list="roles" name="role" class="form-control" placeholder="Select role" value="{{ search_role }}">
+                        <datalist id="roles">{% for r in roles %}<option value="{{ r }}">{% endfor %}</datalist>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-building"></i></span>
+                        <input list="companies" name="company" class="form-control" placeholder="Select company" value="{{ search_company }}">
+                        <datalist id="companies">{% for c in companies %}<option value="{{ c }}">{% endfor %}</datalist>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                        <input list="locations" name="location" class="form-control" placeholder="Select location" value="{{ search_location }}">
+                        <datalist id="locations">{% for l in locations %}<option value="{{ l }}">{% endfor %}</datalist>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 text-center">
+                <button type="submit" class="btn btn-gradient btn-lg shadow px-5 py-2">
+                    <i class="bi bi-search me-2"></i> Search Jobs
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if search_role or search_company or search_location %}
+<div class="text-center mt-4">
+    <p class="text-muted small">
+        Last search:
+        {% if search_role %} Role: <strong>{{ search_role }}</strong> {% endif %}
+        {% if search_company %} | Company: <strong>{{ search_company }}</strong> {% endif %}
+        {% if search_location %} | Location: <strong>{{ search_location }}</strong> {% endif %}
+    </p>
+</div>
+{% endif %}
+
+<style>
+.btn-gradient {
+    background: linear-gradient(45deg, #007bff, #00c6ff);
+    border: none;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+.btn-gradient:hover {
+    background: linear-gradient(45deg, #0056b3, #0096c7);
+    transform: scale(1.05);
+}
+.bg-gradient {
+    background: linear-gradient(to right, #f8f9fa, #e9f5ff);
+}
+</style>
+
+{% endblock %}

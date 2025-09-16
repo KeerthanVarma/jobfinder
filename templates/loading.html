@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex flex-column align-items-center justify-content-center" style="height:80vh;">
+    <!-- Glass card for spinner and messages -->
+    <div class="p-5 rounded-4 shadow-lg text-center" 
+         style="background:rgba(255,255,255,0.8); backdrop-filter:blur(12px); width:500px;">
+        
+        <!-- Animated spinner -->
+        <div class="spinner-border text-primary mb-4" role="status" style="width:4rem; height:4rem;"></div>
+
+        <h2 class="fw-bold text-dark mb-3">Fetching jobs, please wait...</h2>
+        <p class="text-muted mb-2">
+            We are carefully searching multiple trusted job sources to bring you the most relevant opportunities.
+        </p>
+        <p class="text-muted mb-4">
+            This may take a few moments, but we promise it’s worth the wait!
+        </p>
+        <p class="text-muted small">
+            Accuracy matters more than speed — the best matches are coming your way.
+        </p>
+
+
+
+        <!-- Optional status messages -->
+        <p id="statusText" class="mt-2 fw-semibold text-secondary">
+            Connecting to job platforms...
+        </p>
+
+        <!-- Hidden form to auto-submit search -->
+        <form id="fetchForm" action="{{ url_for('search') }}" method="POST">
+            <input type="hidden" name="role" value="{{ role }}">
+            <input type="hidden" name="company" value="{{ company }}">
+            <input type="hidden" name="location" value="{{ location }}">
+        </form>
+    </div>
+</div>
+
+<script>
+    // Auto-submit the hidden form as soon as the page loads
+    window.onload = function() {
+        document.getElementById("fetchForm").submit();
+    };
+</script>
+
+<style>
+/* Optional styling for spinner card */
+.spinner-border {
+    width: 4rem;
+    height: 4rem;
+}
+
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+}
+
+.rounded-4 {
+    border-radius: 1rem !important;
+}
+</style>
+
+{% endblock %}
